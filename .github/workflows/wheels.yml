@@ -133,7 +133,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - uses: actions/upload-artifact@v4.3.1
-      #   with:
-      #     path: ./wheelhouse/*.whl
-      #     name: xmlsec-wheel-${{ matrix.only }}
+      - uses: actions/upload-artifact@v4.3.1
+        with:
+          path: ./wheelhouse/*.whl
+          name: xmlsec-wheel-${{ matrix.only }}
