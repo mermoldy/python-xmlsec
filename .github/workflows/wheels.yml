@@ -112,6 +112,7 @@ jobs:
       PYXMLSEC_LIBXML2_VERSION: 2.13.5
       PYXMLSEC_LIBXSLT_VERSION: 1.1.42
       PYXMLSEC_XMLSEC1_VERSION: 1.3.7
+      PYXMLSEC_OPENSSL_VERSION: 3.4.1
 
     steps:
       - name: Check out the repo
