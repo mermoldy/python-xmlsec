@@ -141,7 +141,7 @@ jobs:
   upload_release_assets:
     needs: build_wheels
     runs-on: ubuntu-latest
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     steps:
       - name: Download all wheel artifacts
         uses: actions/download-artifact@v4
@@ -156,5 +156,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for wheel in all_wheels/**/*.whl; do
-            gh release upload "${GITHUB_REF##*/}" "$wheel" --clobber
+            gh release upload "${GITHUB_REF##*/}" "$wheel" --repo "$GITHUB_REPOSITORY" --clobber
           done
