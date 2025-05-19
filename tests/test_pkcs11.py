@@ -43,7 +43,7 @@ class TestKeys(base.TestMemoryLeaks):
         with self.assertRaisesRegex(xmlsec.Error, "failed to sign"):
             ctx.sign(self.load_xml("sign1-in.xml"))
 
-    @pytest.skip
+    @pytest.mark.skip(reason="no key configured")
     def test_sign_case1(self):
         """Should sign a pre-constructed template file using a key from a pkcs11 engine."""
         root = self.load_xml("sign1-in.xml")
