@@ -475,7 +475,7 @@ class build_ext(build_ext_orig):
                     )
                 )
             else:
-                url = "https://github.com/lsh123/xmlsec/releases/download/{}/xmlsec1-{}tar.gz".format(
+                url = "https://github.com/lsh123/xmlsec/releases/download/{}/xmlsec1-{}.tar.gz".format(
                     self.xmlsec1_version, self.xmlsec1_version
                 )
 
