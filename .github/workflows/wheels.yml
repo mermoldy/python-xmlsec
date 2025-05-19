@@ -92,6 +92,7 @@ jobs:
           MATRIX=$(
             cibuildwheel --print-build-identifiers --platform linux \
             | grep -E 'manylinux_(x86_64|aarch64)' \
+            | grep -E 'cp3(12|13)-' \
             | jq -Rnc '[inputs | {only: ., os: "ubuntu-latest"}]'
           )
           echo "include=$MATRIX"
