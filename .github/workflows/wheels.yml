@@ -51,11 +51,11 @@ jobs:
       - name: Run tests
         run: pytest -v --color=yes
 
-      - name: Upload sdist
-        uses: actions/upload-artifact@v4.3.1
-        with:
-          name: sdist
-          path: dist/*.tar.gz
+      # - name: Upload sdist
+      #   uses: actions/upload-artifact@v4.3.1
+      #   with:
+      #     name: sdist
+      #     path: dist/*.tar.gz
 
   generate-wheels-matrix:
     # Create a matrix of all architectures & versions to build.
@@ -122,7 +122,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v4.3.1
-        with:
-          path: ./wheelhouse/*.whl
-          name: xmlsec-wheel-${{ matrix.only }}
+      # - uses: actions/upload-artifact@v4.3.1
+      #   with:
+      #     path: ./wheelhouse/*.whl
+      #     name: xmlsec-wheel-${{ matrix.only }}
