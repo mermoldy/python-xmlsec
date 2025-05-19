@@ -118,10 +118,7 @@ def latest_libxslt_release():
 
 
 def latest_xmlsec_release():
-    return latest_release_from_html(
-        "https://github.com/lsh123/xmlsec/archive/refs/tags",
-        re.compile("(?P<version>.*).tar.gz"),
-    )
+    return latest_release_from_github_api("lsh123/xmlsec")
 
 
 class CrossCompileInfo:
@@ -478,8 +475,8 @@ class build_ext(build_ext_orig):
                     )
                 )
             else:
-                url = "https://github.com/lsh123/xmlsec/archive/refs/tags/{}.tar.gz".format(
-                    self.xmlsec1_version
+                url = "https://github.com/lsh123/xmlsec/releases/download/{}/xmlsec1-{}tar.gz".format(
+                    self.xmlsec1_version, self.xmlsec1_version
                 )
 
                 self.info(
