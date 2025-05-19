@@ -137,3 +137,24 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
           name: xmlsec-wheel-${{ matrix.only }}
+
+  upload_release_assets:
+    needs: build_wheels
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all_wheels
+
+      - name: Install gh CLI
+        run: sudo apt-get update && sudo apt-get install -y gh
+
+      - name: Upload wheels to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for wheel in all_wheels/**/*.whl; do
+            gh release upload "${GITHUB_REF##*/}" "$wheel" --clobber
+          done
