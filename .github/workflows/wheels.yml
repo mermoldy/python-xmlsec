@@ -91,12 +91,17 @@ jobs:
         #   echo "include=$MATRIX"
         #   echo "include=$MATRIX" >> $GITHUB_OUTPUT
         run: |
-          MATRIX=$(
+          LINUX=$(
             cibuildwheel --print-build-identifiers --platform linux \
             | grep -E 'manylinux_(x86_64|aarch64)' \
             | grep -E 'cp3(12|13)-' \
-            | jq -Rnc '[inputs | {only: ., os: "ubuntu-latest"}]'
+            | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}'
           )
+          MACOS=$(
+            cibuildwheel --print-build-identifiers --platform macos \
+            | jq -nRc '{"only": inputs, "os": "macos-latest"}'
+          )
+          MATRIX=$(jq -sc 'add' <(echo "$LINUX") <(echo "$MACOS"))
           echo "include=$MATRIX"
           echo "include=$MATRIX" >> $GITHUB_OUTPUT
 
