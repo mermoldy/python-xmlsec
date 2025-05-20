@@ -132,10 +132,11 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: all
-      - name: Install libgcrypt on macOS
+      - name: Set Homebrew paths for macOS
         if: runner.os == 'macOS'
         run: |
-          brew install libgcrypt
+          echo "CPPFLAGS=-I/opt/homebrew/include" >> $GITHUB_ENV
+          echo "LDFLAGS=-L/opt/homebrew/lib" >> $GITHUB_ENV
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
