@@ -98,6 +98,7 @@ jobs:
               | grep -E 'cp3(12|13)-' \
               | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}' \
               && cibuildwheel --print-build-identifiers --platform macos \
+              | grep -E 'cp3(12|13)-' \
               | jq -nRc '{"only": inputs, "os": "macos-latest"}'
             } | jq -sc
           )
