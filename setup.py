@@ -610,6 +610,11 @@ class build_ext(build_ext_orig):
                 "--disable-shared",
                 "--without-lzma",
                 "--without-python",
+                *(
+                    ["--with-legacy-features"]
+                    if Version(self.libxml2_version) >= Version("1.3.7")
+                    else []
+                ),
                 "--with-iconv={}".format(self.prefix_dir),
                 "--with-zlib={}".format(self.prefix_dir),
                 host_arg,
