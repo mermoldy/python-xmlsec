@@ -610,11 +610,6 @@ class build_ext(build_ext_orig):
                 "--disable-shared",
                 "--without-lzma",
                 "--without-python",
-                *(
-                    ["--with-legacy-features"]
-                    if Version(self.libxml2_version) >= Version("1.3.7")
-                    else []
-                ),
                 "--with-iconv={}".format(self.prefix_dir),
                 "--with-zlib={}".format(self.prefix_dir),
                 host_arg,
@@ -676,6 +671,14 @@ class build_ext(build_ext_orig):
                 "--enable-shared=no",
                 "--enable-static-linking=yes",
                 "--with-default-crypto=openssl",
+                *(
+                    ["--with-legacy-features"]
+                    if (
+                        not self.xmlsec1_version  # latest
+                        or Version(self.xmlsec1_version) >= Version("1.3.7")
+                    )
+                    else []
+                ),
                 "--with-openssl={}".format(self.prefix_dir),
                 "--with-libxml={}".format(self.prefix_dir),
                 "--with-libxslt={}".format(self.prefix_dir),
