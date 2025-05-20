@@ -94,7 +94,7 @@ jobs:
           MATRIX=$(
             {
               cibuildwheel --print-build-identifiers --platform linux \
-              | grep -E 'manylinux_(x86_64|aarch64)' \
+              | grep -E 'manylinux_(x86_64)' \
               | grep -E 'cp3(12|13)-' \
               | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}' \
               && cibuildwheel --print-build-identifiers --platform macos \
@@ -132,6 +132,10 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: all
+      - name: Install libgcrypt on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew install libgcrypt
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
