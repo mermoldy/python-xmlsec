@@ -666,19 +666,12 @@ class build_ext(build_ext_orig):
                 "--disable-shared",
                 "--disable-gost",
                 "--enable-md5",
+                "--enable-ripemd160",
                 "--disable-crypto-dl",
                 "--enable-static=yes",
                 "--enable-shared=no",
                 "--enable-static-linking=yes",
                 "--with-default-crypto=openssl",
-                *(
-                    ["--with-legacy-features"]
-                    if (
-                        not self.xmlsec1_version  # latest
-                        or Version(self.xmlsec1_version) >= Version("1.3.7")
-                    )
-                    else []
-                ),
                 "--with-openssl={}".format(self.prefix_dir),
                 "--with-libxml={}".format(self.prefix_dir),
                 "--with-libxslt={}".format(self.prefix_dir),
