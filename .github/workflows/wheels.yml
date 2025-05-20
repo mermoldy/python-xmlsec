@@ -99,6 +99,7 @@ jobs:
               | grep -E 'manylinux_(x86_64)' \
               | grep -E 'cp3(12)-' \
               | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}'
+            } | jq -sc
           )
           echo "include=$MATRIX"
           echo "include=$MATRIX" >> $GITHUB_OUTPUT
