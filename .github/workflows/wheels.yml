@@ -90,25 +90,15 @@ jobs:
         #   )
         #   echo "include=$MATRIX"
         #   echo "include=$MATRIX" >> $GITHUB_OUTPUT
-        # run: |
-        #   MATRIX=$(
-        #     {
-        #       cibuildwheel --print-build-identifiers --platform linux \
-        #       | grep -E 'manylinux_(x86_64)' \
-        #       | grep -E 'cp3(12|13)-' \
-        #       | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}' \
-        #       && cibuildwheel --print-build-identifiers --platform macos \
-        #       | grep -E 'cp3(12|13)-' \
-        #       | jq -nRc '{"only": inputs, "os": "macos-latest"}'
-        #     } | jq -sc
-        #   )
-        #   echo "include=$MATRIX"
-        #   echo "include=$MATRIX" >> $GITHUB_OUTPUT
         run: |
           MATRIX=$(
             {
-              cibuildwheel --print-build-identifiers --platform macos \
-              | grep -E 'cp3(12)-' \
+              cibuildwheel --print-build-identifiers --platform linux \
+              | grep -E 'manylinux_(x86_64)' \
+              | grep -E 'cp3(12|13)-' \
+              | jq -nRc '{"only": inputs, "os": "ubuntu-latest"}' \
+              && cibuildwheel --print-build-identifiers --platform macos \
+              | grep -E 'cp3(12|13)-' \
               | jq -nRc '{"only": inputs, "os": "macos-latest"}'
             } | jq -sc
           )
@@ -129,7 +119,7 @@ jobs:
       PYXMLSEC_LIBXML2_VERSION: 2.13.8
       PYXMLSEC_LIBXSLT_VERSION: 1.1.43
       PYXMLSEC_XMLSEC1_VERSION: 1.2.40
-      PYXMLSEC_OPENSSL_VERSION: 3.0.13
+      PYXMLSEC_OPENSSL_VERSION: 3.5.0
 
     steps:
       - name: Check out the repo
@@ -142,6 +132,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: all
+
       - name: Set Homebrew paths for macOS
         if: runner.os == 'macOS'
         run: |
